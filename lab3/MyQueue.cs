@@ -32,6 +32,7 @@ namespace lab3
                 return toReturn;
             }
         }
+        public bool IsEmpty => count == 0 ? true : false;
         public T First() => count == 0 ? throw new ArgumentNullException("Queue is empty") : elements[0]; 
         public int Size() => count;
         public MyQueue<T> Clear()
