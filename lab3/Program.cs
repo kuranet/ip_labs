@@ -8,8 +8,8 @@ namespace lab3
         {
             //string[] arg = { "1","+","4","*","2","-","3","*","4","+","8","-","6","*","2","/","3"};
             //string str = "1+2";
-            string[] arg = { "1", "+", "3", "*", "2", "-", "4"};
-            RPN myprn = new RPN(arg);
+            string[] arg = { "123+(15*2/5)", "+", "3", "*", "2", "-", "4"};
+            RPN myprn = new RPN(arg[0]);
             myprn.Calc();
         }
     }

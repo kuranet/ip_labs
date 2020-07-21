@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+
 namespace lab3
 {
     class RPN
@@ -6,8 +8,9 @@ namespace lab3
         MyQueue<string> output;
         MyStack<string> stack;
 
-        public RPN(string[] str)
+        public RPN(string sstr)
         {
+            string[] str =  Parser(sstr);
             output = new MyQueue<string>();
             stack = new MyStack<string>();
 
@@ -45,6 +48,36 @@ namespace lab3
             {
                 output.Push(stack.Pop());
             }            
+        }
+        string[] Parser(string str)
+        {
+            int startPos = 0;
+            string[] res = new string[0];
+            for(int i = 1; i< str.Length; i++)
+            {
+                if(!Char.IsDigit(str[i]))
+                {
+                    if ((i - startPos) != 0)
+                    {
+                        Array.Resize(ref res, res.Length + 2);
+                        res[res.Length - 2] = str.Substring(startPos, i - startPos);
+                        res[res.Length - 1] = str[i].ToString();
+                    }
+                    else
+                    {
+                        Array.Resize(ref res, res.Length + 1);
+                        res[res.Length - 1] = str[i].ToString();
+                    }
+                    startPos = i + 1;    
+                    
+                }
+                else if (i == str.Length-1)
+                {
+                    Array.Resize(ref res, res.Length + 1);
+                    res[res.Length - 1] = str.Substring(startPos, i - startPos+1);
+                }
+            }
+            return res;
         }
         public void Calc()
         {
