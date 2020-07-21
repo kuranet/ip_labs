@@ -33,12 +33,21 @@ namespace lab3
                             }
                             stack.Push(s); break;
                         case "*":
-                        case "/": 
+                        case "/":
+                        case "^":
                             if(!stack.IsEmpty() && (stack.Back() == "*" || stack.Back()=="/"))
                             {
                                 output.Push(stack.Pop());                                
                             }
                             stack.Push(s);
+                            break;
+                        case "(":
+                            stack.Push(s);
+                            break;
+                        case ")":
+                            while (stack.Back() != "(")
+                                output.Push(stack.Pop());
+                            stack.Pop();
                             break;
                     }                    
                 }

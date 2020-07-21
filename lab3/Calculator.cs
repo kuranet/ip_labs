@@ -17,7 +17,7 @@ namespace lab3
         {
             int startPos = 0;
             string[] res = new string[0];
-            for (int i = 1; i < str.Length; i++)
+            for (int i = 0; i < str.Length; i++)
             {
                 if (!Char.IsDigit(str[i]))
                 {
@@ -71,6 +71,9 @@ namespace lab3
                             break;
                         case "/":
                             res = second / first;
+                            break;
+                        case "^":
+                            res = Convert.ToInt32(Math.Pow(Convert.ToDouble(second), Convert.ToDouble(first)));
                             break;
                     }
                     rpn.stack.Push(res.ToString());
