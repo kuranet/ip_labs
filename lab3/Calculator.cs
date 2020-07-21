@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace lab3
@@ -47,36 +48,45 @@ namespace lab3
         {
             while (!rpn.output.IsEmpty)
             {
-                int num = 0;
+                double num = 0;
                 string temp = rpn.output.Pop();
-                if (Int32.TryParse(temp, out num))
+                if (Double.TryParse(temp, out num))
                 {
                     rpn.stack.Push(temp);
                 }
                 else
                 {
-                    int first = Convert.ToInt32(rpn.stack.Pop());
-                    int second = Convert.ToInt32(rpn.stack.Pop());
-                    int res = 0;
-                    switch (temp)
+                    if (rpn.stack.Size() >= 2)
                     {
-                        case "+":
-                            res = first + second;
-                            break;
-                        case "-":
-                            res = second - first;
-                            break;
-                        case "*":
-                            res = first * second;
-                            break;
-                        case "/":
-                            res = second / first;
-                            break;
-                        case "^":
-                            res = Convert.ToInt32(Math.Pow(Convert.ToDouble(second), Convert.ToDouble(first)));
-                            break;
+                        double first = Convert.ToDouble(rpn.stack.Pop());
+                        double second = Convert.ToDouble(rpn.stack.Pop());
+                        double res = 0;
+                        switch (temp)
+                        {
+                            case "+":
+                                res = first + second;
+                                break;
+                            case "-":
+                                res = second - first;
+                                break;
+                            case "*":
+                                res = first * second;
+                                break;
+                            case "/":
+                                res = second / first;
+                                break;
+                            case "^":
+                                res = Math.Pow(second, first);
+                                break;
+                        }
+                        rpn.stack.Push(res.ToString());
                     }
-                    rpn.stack.Push(res.ToString());
+                    else
+                    {
+                        double res = Convert.ToDouble(rpn.stack.Pop());
+                        res *= -1;
+                        rpn.stack.Push(res.ToString());
+                    }
                 }
             }
         }
